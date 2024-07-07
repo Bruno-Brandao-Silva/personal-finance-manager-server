@@ -12,6 +12,8 @@ export async function createPresetReport(req: Request, res: Response) {
         if (existingReport) {
             return res.status(409).json({ error: 'Report already exists with this name' });
         }
+        presetReport.create({ userId, incomes, expenses });
+        return res.status(201).json({ message: 'Report created successfully' });
     } catch (error: any) {
         handleError(res, error, 'Error creating preset report');
     }

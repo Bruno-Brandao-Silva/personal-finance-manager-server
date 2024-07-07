@@ -23,7 +23,7 @@ export const isTokenInvalid = (token: string): boolean => {
 
 export async function verifyAuth(req: Request, res: Response, next: NextFunction) {
   try {
-    const token = req.headers.authorization?.replace('Bearer ', '');
+    const token = req.signedCookies[TOKEN_KEY] || req.headers.authorization?.replace('Bearer ', '');
 
     if (!token) {
       return res.status(401).json({ error: 'Access denied, missing token' });
@@ -60,9 +60,16 @@ export async function signAuth(res: Response, _id: Types.ObjectId) {
       .setIssuedAt()
       .setExpirationTime(expirationDate)
       .sign(new TextEncoder().encode(JWT_SECRET));
-
-    res.cookie(TOKEN_KEY, token, { httpOnly: true, secure: true, expires: expirationDate });
-    return { TOKEN_KEY, token, expires: expirationDate };
+    res.cookie(TOKEN_KEY, token,
+      {
+        httpOnly: true,
+        expires: expirationDate,
+        secure: true,
+        sameSite: 'none',
+        signed: true
+      });
+    // res.cookie(TOKEN_KEY, token, { httpOnly: true, secure: true, expires: expirationDate });
+    return { token_key: TOKEN_KEY, token, expires: expirationDate };
   } catch (err: any) {
     console.error('Error signing the authentication token:', err);
     throw new Error('Error signing the authentication token');

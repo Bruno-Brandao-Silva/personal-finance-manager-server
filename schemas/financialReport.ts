@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const userMonthlySchema = new mongoose.Schema({
+const financialReport = new mongoose.Schema({
     userId: {
         type: mongoose.Types.ObjectId,
         required: true
@@ -46,13 +46,13 @@ const userMonthlySchema = new mongoose.Schema({
     }
 });
 
-userMonthlySchema.pre('save', function (next) {
+financialReport.pre('save', function (next) {
     const incomeTotal = this.incomes.reduce((total, income) => total + income.amount!, 0);
     const expenseTotal = this.expenses.reduce((total, expense) => total + expense.amount!, 0);
     this.balance = incomeTotal - expenseTotal;
     next();
 });
 
-userMonthlySchema.index({ userId: 1, month: 1, year: 1 }, { unique: true });
+financialReport.index({ userId: 1, month: 1, year: 1 }, { unique: true });
 
-export default mongoose.model('UserMonthly', userMonthlySchema);
+export default mongoose.model('FinancialReport', financialReport);

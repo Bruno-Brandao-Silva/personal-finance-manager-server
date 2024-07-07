@@ -14,8 +14,8 @@ export async function login(req: Request, res: Response) {
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) return res.status(401).json({ error: 'Invalid email or password' });
 
-        const token = await signAuth(res, user._id);
-        return res.json({ token });
+        const data = await signAuth(res, user._id);
+        return res.json({ ...data });
     } catch (error: any) {
         handleError(res, error);
     }
@@ -33,8 +33,8 @@ export async function register(req: Request, res: Response) {
 
         await newUser.save();
 
-        const token = await signAuth(res, newUser._id);
-        return res.status(201).json({ token });
+        const data = await signAuth(res, newUser._id);
+        return res.status(201).json({ ...data });
     } catch (error: any) {
         handleError(res, error, 'Error registering user');
     }
