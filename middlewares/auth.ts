@@ -54,7 +54,7 @@ export async function verifyAuth(req: Request, res: Response, next: NextFunction
 export async function signAuth(res: Response, _id: Types.ObjectId) {
   try {
     const expirationDate = new Date(Date.now() + expiresIn);
-    const token = await new SignJWT({ _id })
+    const token = await new SignJWT({ _id: _id.toString() })
       .setProtectedHeader({ alg: 'HS256' })
       .setJti(nanoid())
       .setIssuedAt()
