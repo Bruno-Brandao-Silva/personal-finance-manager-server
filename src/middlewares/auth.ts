@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { SignJWT, jwtVerify } from 'jose';
-import { nanoid } from 'nanoid';
 import { Types } from 'mongoose';
-import User from '../schemas/user';
+import { nanoid } from 'nanoid';
+import User from '../schemas/user.ts';
 
 const expiresIn = 1000 * 60 * 60;
 const invalidTokens: Set<string> = new Set();

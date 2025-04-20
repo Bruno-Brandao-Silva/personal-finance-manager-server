@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { verifyAuth } from '../middlewares/auth';
 import {
     createPresetReport,
+    deletePresetReport,
     getPresetReport,
-    updatePresetReport,
-    deletePresetReport
-} from '../controllers/presetReport';
+    updatePresetReport
+} from '../controllers/presetReport.ts';
+import { verifyAuth } from '../middlewares/auth.ts';
 
 const router = Router()
 

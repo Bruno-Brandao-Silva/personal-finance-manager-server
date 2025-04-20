@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { verifyAuth } from '../middlewares/auth';
 import {
-    getFinancialReports,
     createFinancialReport,
+    deleteFinancialReport,
     getFinancialReport,
-    updateFinancialReport,
-    deleteFinancialReport
-} from '../controllers/financialReport';
+    getFinancialReports,
+    updateFinancialReport
+} from '../controllers/financialReport.ts';
+import { verifyAuth } from '../middlewares/auth.ts';
 
 const router = Router();
 

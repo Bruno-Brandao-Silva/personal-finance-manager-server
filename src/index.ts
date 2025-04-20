@@ -3,10 +3,10 @@ import express from 'express';
 import cors from "cors";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-import authRoutes from './routes/auth';
-import financialReportRoutes from './routes/financialReport';
-import presetReportRoutes from './routes/presetReport';
-import userRoutes from './routes/user';
+import authRoutes from './routes/auth.ts';
+import financialReportRoutes from './routes/financialReport.ts';
+import presetReportRoutes from './routes/presetReport.ts';
+import userRoutes from './routes/user.ts';
 
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI!;

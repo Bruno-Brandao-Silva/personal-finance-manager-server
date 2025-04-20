@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
-import User from '../schemas/user';
 import bcrypt from 'bcrypt';
-import { signAuth, addInvalidToken } from '../middlewares/auth';
-import { handleError } from '../lib/utils';
+import { Request, Response } from 'express';
+import { handleError } from '../lib/utils.ts';
+import { addInvalidToken, signAuth } from '../middlewares/auth.ts';
+import User from '../schemas/user.ts';
 
 export async function login(req: Request, res: Response) {
     try {

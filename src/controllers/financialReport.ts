@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import financialReport from '../schemas/financialReport';
-import { handleError } from '../lib/utils';
 import mongoose from 'mongoose';
+import { handleError } from '../lib/utils.ts';
+import financialReport from '../schemas/financialReport.ts';
 
 export async function createFinancialReport(req: Request, res: Response) {
     try {

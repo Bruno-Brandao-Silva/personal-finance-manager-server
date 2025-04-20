@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import presetReport from '../schemas/presetReport';
-import { handleError } from '../lib/utils';
 import mongoose from 'mongoose';
+import { handleError } from '../lib/utils.ts';
+import presetReport from '../schemas/presetReport.ts';
 
 export async function createPresetReport(req: Request, res: Response) {
     try {
