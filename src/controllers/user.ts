@@ -9,13 +9,19 @@ export async function login(req: Request, res: Response) {
         const { email, password }: LoginRequestBody = req.body;
 
         const user = await User.findOne({ email });
-        if (!user) return res.status(401).json({ error: 'Invalid email or password' });
+        if (!user) {
+            res.status(401).json({ error: 'Invalid email or password' });
+            return
+        }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) return res.status(401).json({ error: 'Invalid email or password' });
+        if (!isPasswordValid) {
+            res.status(401).json({ error: 'Invalid email or password' });
+            return;
+        }
 
         const data = await signAuth(res, user._id);
-        return res.json({ ...data });
+        res.json({ ...data });
     } catch (error: any) {
         handleError(res, error);
     }
@@ -26,15 +32,17 @@ export async function register(req: Request, res: Response) {
         const { name, email, password }: RegisterRequestBody = req.body;
 
         const existingUser = await User.findOne({ email });
-        if (existingUser) return res.status(409).json({ error: 'Email already in use' });
-
+        if (existingUser) {
+            res.status(409).json({ error: 'Email already in use' });
+            return;
+        }
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({ name, email, password: hashedPassword });
 
         await newUser.save();
 
         const data = await signAuth(res, newUser._id);
-        return res.status(201).json({ ...data });
+        res.status(201).json({ ...data });
     } catch (error: any) {
         handleError(res, error, 'Error registering user');
     }
@@ -56,7 +64,10 @@ export async function get(req: Request, res: Response) {
     try {
         const { _id }: UserJwtPayload = req.UserJwtPayload;
         const user = await User.findById(_id).select('-password');
-        if (!user) return res.status(404).json({ error: 'User not found' });
+        if (!user) {
+            res.status(404).json({ error: 'User not found' });
+            return;
+        }
         res.json(user);
     } catch (error: any) {
         handleError(res, error, 'Error getting user data');
@@ -68,7 +79,10 @@ export async function patch(req: Request, res: Response) {
         const { _id }: UserJwtPayload = req.UserJwtPayload;
         const updatedFields = req.body;
         const updatedUser = await User.findByIdAndUpdate(_id, updatedFields, { new: true }).select('-password');
-        if (!updatedUser) return res.status(404).json({ error: 'User not found' });
+        if (!updatedUser) {
+            res.status(404).json({ error: 'User not found' });
+            return;
+        }
         res.status(200).json({ message: 'Profile edited successfully', user: updatedUser });
     } catch (error: any) {
         handleError(res, error, 'Error editing profile');
@@ -79,7 +93,10 @@ export async function remove(req: Request, res: Response) {
     try {
         const { _id }: UserJwtPayload = req.UserJwtPayload;
         const deletedUser = await User.findByIdAndDelete(_id);
-        if (!deletedUser) return res.status(404).json({ error: 'User not found' });
+        if (!deletedUser) {
+            res.status(404).json({ error: 'User not found' });
+            return;
+        }
         res.json({ message: 'User deleted successfully' });
     } catch (error: any) {
         handleError(res, error, 'Error deleting user');

@@ -11,13 +11,13 @@ export async function createFinancialReport(req: Request, res: Response) {
 
         const existingReport = await financialReport.findOne({ userId, year, month });
         if (existingReport) {
-            return res.status(409).json({ error: 'Report already exists for this month and year' });
+            res.status(409).json({ error: 'Report already exists for this month and year' });
         }
 
         const newReport = new financialReport({ userId, year, month, incomes, expenses });
         await newReport.save();
 
-        return res.status(201).json({ message: 'Report created successfully' });
+        res.status(201).json({ message: 'Report created successfully' });
     } catch (error: any) {
         handleError(res, error, 'Error creating financial report');
     }
@@ -38,7 +38,10 @@ export async function getFinancialReport(req: Request, res: Response) {
         const userId = req.UserJwtPayload._id;
         const { year, month } = req.params;
         const report = await financialReport.findOne({ userId, year, month });
-        if (!report) return res.status(404).json({ error: 'Report not found' });
+        if (!report) {
+            res.status(404).json({ error: 'Report not found' });
+            return;
+        }
         res.json(report);
     } catch (error: any) {
         handleError(res, error, 'Error fetching financial report');
@@ -52,7 +55,10 @@ export async function updateFinancialReport(req: Request, res: Response) {
         const { incomes, expenses }: ReportRequestBody = req.body;
 
         const report = await financialReport.findOne({ userId, year, month });
-        if (!report) return res.status(404).json({ error: 'Report not found' });
+        if (!report) {
+            res.status(404).json({ error: 'Report not found' });
+            return;
+        }
 
         report.incomes = incomes as mongoose.Types.DocumentArray<Income>;
         report.expenses = expenses as mongoose.Types.DocumentArray<Expense>;
@@ -70,7 +76,10 @@ export async function deleteFinancialReport(req: Request, res: Response) {
         const { year, month } = req.params;
 
         const report = await financialReport.findOne({ userId, year, month });
-        if (!report) return res.status(404).json({ error: 'Report not found' });
+        if (!report) {
+            res.status(404).json({ error: 'Report not found' });
+            return;
+        }
 
         await report.deleteOne();
         res.json({ message: 'Report deleted successfully' });

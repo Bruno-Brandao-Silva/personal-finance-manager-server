@@ -21,16 +21,16 @@ export const isTokenInvalid = (token: string): boolean => {
   return invalidTokens.has(token);
 };
 
-export async function verifyAuth(req: Request, res: Response, next: NextFunction) {
+export async function verifyAuth(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const token = req.signedCookies[TOKEN_KEY] || req.headers.authorization?.replace('Bearer ', '');
 
     if (!token) {
-      return res.status(401).json({ error: 'Access denied, missing token' });
+      res.status(401).json({ error: 'Access denied, missing token' });
     }
 
     if (isTokenInvalid(token)) {
-      return res.status(403).json({ error: 'Access denied, invalid token' });
+      res.status(403).json({ error: 'Access denied, invalid token' });
     }
 
     const verified = await jwtVerify(
@@ -40,14 +40,14 @@ export async function verifyAuth(req: Request, res: Response, next: NextFunction
 
     const userExists = await User.exists({ _id: verified.payload._id });
     if (!userExists) {
-      return res.status(401).json({ error: 'Access denied, invalid token' });
+      res.status(401).json({ error: 'Access denied, invalid token' });
     }
 
     req.UserJwtPayload = verified.payload as UserJwtPayload;
     next();
   } catch (err: any) {
     console.error(err);
-    return res.status(403).json({ error: 'Access denied, invalid token' });
+    res.status(403).json({ error: 'Access denied, invalid token' });
   }
 }
 
