@@ -1,0 +1,10 @@
+services:
+  mongodb:
+    user: root
+    restart: unless-stopped
+    image: mongo:latest
+    container_name: mongodb
+    ports:  
+      - "27017:27017"
+    volumes:
+      - ../data/mongodb:/data/db
