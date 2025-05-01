@@ -1,7 +1,6 @@
-import { Request, Response } from 'express';
-import mongoose from 'mongoose';
-import { handleError } from '../lib/utils.ts';
-import financialReport from '../schemas/financialReport.ts';
+import type { Request, Response } from 'express';
+import { handleError } from '../lib/utils.js';
+import financialReport from '../schemas/financialReport.js';
 
 export async function createFinancialReport(req: Request, res: Response) {
     try {
@@ -60,8 +59,8 @@ export async function updateFinancialReport(req: Request, res: Response) {
             return;
         }
 
-        report.incomes = incomes as mongoose.Types.DocumentArray<Income>;
-        report.expenses = expenses as mongoose.Types.DocumentArray<Expense>;
+        report.incomes = incomes;
+        report.expenses = expenses;
 
         await report.save();
         res.json({ message: 'Report updated successfully' });

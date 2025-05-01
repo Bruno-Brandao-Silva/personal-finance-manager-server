@@ -1,9 +1,13 @@
-import mongoose from 'mongoose';
+import { Schema, Types, model } from 'mongoose';
+import { ReportSchema } from './report.js';
+import type { IFinancial } from '../interfaces/financial.js';
 
-const financialReport = new mongoose.Schema({
+const financialReport = new Schema<IFinancial>({
     userId: {
-        type: mongoose.Types.ObjectId,
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+        unique: true
     },
     month: {
         type: Number,
@@ -16,28 +20,11 @@ const financialReport = new mongoose.Schema({
         required: true,
     },
     incomes: {
-        type: [{
-            amount: {
-                type: Number,
-            },
-            description: {
-                type: String,
-                required: true
-            }
-        }],
+        type: [ReportSchema],
         default: []
     },
     expenses: {
-        type: [{
-            amount: {
-                type: Number,
-            },
-            description: {
-                type: String,
-                required: true
-            }
-
-        }],
+        type: [ReportSchema],
         default: []
     },
     balance: {
@@ -55,4 +42,4 @@ financialReport.pre('save', function (next) {
 
 financialReport.index({ userId: 1, month: 1, year: 1 }, { unique: true });
 
-export default mongoose.model('FinancialReport', financialReport);
+export default model('FinancialReport', financialReport);

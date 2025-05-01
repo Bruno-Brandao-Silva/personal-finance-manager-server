@@ -1,8 +1,9 @@
-import mongoose from "mongoose";
+import { model, Schema } from "mongoose";
+import type { IPreset } from "../interfaces/preset.js"
 
-const presetReportSchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Types.ObjectId,
+const presetReportSchema = new Schema<IPreset>({
+    userId: {
+        type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,
         unique: true
@@ -27,4 +28,4 @@ const presetReportSchema = new mongoose.Schema({
     }],
 });
 
-export default mongoose.model("PresetReport", presetReportSchema);
+export default model("PresetReport", presetReportSchema);

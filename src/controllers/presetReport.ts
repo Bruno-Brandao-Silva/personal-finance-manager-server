@@ -1,7 +1,6 @@
-import { Request, Response } from 'express';
-import mongoose from 'mongoose';
-import { handleError } from '../lib/utils.ts';
-import presetReport from '../schemas/presetReport.ts';
+import type { Request, Response } from 'express';
+import { handleError } from '../lib/utils.js';
+import presetReport from '../schemas/presetReport.js';
 
 export async function createPresetReport(req: Request, res: Response) {
     try {
@@ -44,8 +43,8 @@ export async function updatePresetReport(req: Request, res: Response) {
             res.status(404).json({ error: 'Report not found' });
             return;
         }
-        report.incomes = incomes as mongoose.Types.DocumentArray<Income>;
-        report.expenses = expenses as mongoose.Types.DocumentArray<Expense>;
+        report.incomes = incomes;
+        report.expenses = expenses;
 
         await report.save();
         res.json({ message: 'Report updated successfully' });

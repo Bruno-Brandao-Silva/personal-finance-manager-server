@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
-import { Request, Response } from 'express';
-import { handleError } from '../lib/utils.ts';
-import { addInvalidToken, signAuth } from '../middlewares/auth.ts';
-import User from '../schemas/user.ts';
+import type { Request, Response } from 'express';
+import { handleError } from '../lib/utils.js';
+import { addInvalidToken, signAuth } from '../middlewares/auth.js';
+import User from '../schemas/user.js';
 
 export async function login(req: Request, res: Response) {
     try {
@@ -14,7 +14,7 @@ export async function login(req: Request, res: Response) {
             return
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        const isPasswordValid = await bcrypt.compare(password, user.password.toString());
         if (!isPasswordValid) {
             res.status(401).json({ error: 'Invalid email or password' });
             return;

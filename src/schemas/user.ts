@@ -1,6 +1,7 @@
-import mongoose from 'mongoose';
+import { Schema, model } from 'mongoose';
+import type { IUser } from '../interfaces/user.js';
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema<IUser>({
 	name: {
 		type: String,
 		required: true,
@@ -21,4 +22,4 @@ const userSchema = new mongoose.Schema({
 	{ timestamps: true }
 );
 
-export default mongoose.model('User', userSchema);
+export default model('User', userSchema);

@@ -4,8 +4,8 @@ import {
     deletePresetReport,
     getPresetReport,
     updatePresetReport
-} from '../controllers/presetReport.ts';
-import { verifyAuth } from '../middlewares/auth.ts';
+} from '../controllers/presetReport.js';
+import { verifyAuth } from '../middlewares/auth.js';
 
 const router = Router()
 

@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write ."
   },
   "keywords": [],
   "author": "",
@@ -17,7 +19,7 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^5.1.0",
+    "express": "^4.21.2",
     "jose": "^6.0.10",
     "mongoose": "^8.13.2",
     "nanoid": "^5.1.5"
@@ -27,8 +29,8 @@
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
-    "nodemon": "^3.1.9",
-    "ts-node": "^10.9.2",
+    "nodemon": "^3.1.10",
+    "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   }
 }

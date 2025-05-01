@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { deleteAllFinancialReports } from "../controllers/financialReport.ts";
-import { deletePresetReport } from "../controllers/presetReport.ts";
-import { get, patch, remove } from '../controllers/user.ts';
-import { verifyAuth } from '../middlewares/auth.ts';
+import { deleteAllFinancialReports } from "../controllers/financialReport.js";
+import { deletePresetReport } from "../controllers/presetReport.js";
+import { get, patch, remove } from '../controllers/user.js';
+import { verifyAuth } from '../middlewares/auth.js';
 
 const router = Router();
 

@@ -5,8 +5,8 @@ import {
     getFinancialReport,
     getFinancialReports,
     updateFinancialReport
-} from '../controllers/financialReport.ts';
-import { verifyAuth } from '../middlewares/auth.ts';
+} from '../controllers/financialReport.js';
+import { verifyAuth } from '../middlewares/auth.js';
 
 const router = Router();
 

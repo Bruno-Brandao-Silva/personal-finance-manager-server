@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongoose';
+import { IReport } from './interfaces/report';
 
 declare global {
   namespace Express {
@@ -29,18 +30,8 @@ declare global {
     password: string;
   }
 
-  type Income = {
-    amount?: number;
-    description: string;
-  }
-
-  type Expense = {
-    amount?: number;
-    description: string;
-  }
-
   type ReportRequestBody = {
-    incomes: Income[];
-    expenses: Expense[];
+    incomes: IReport[];
+    expenses: IReport[];
   }
 }
