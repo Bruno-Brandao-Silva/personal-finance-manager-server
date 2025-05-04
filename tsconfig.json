@@ -14,6 +14,9 @@
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
   },
+  "files": [
+    "src/globals.d.ts"
+  ],
   "include": [
     "src/**/*.ts"
   ],

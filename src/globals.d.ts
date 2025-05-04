@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongoose';
-import { IReport } from './interfaces/report';
+import { IReport } from './interfaces/report.js';
 
 declare global {
   namespace Express {
